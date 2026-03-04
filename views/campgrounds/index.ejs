@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Campground Cluster Map
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div id="cluster-map" data-api-key="<%= maptilerApiKey %>" data-campgrounds='<%= JSON.stringify({
+    type: "FeatureCollection",
+    features: campgrounds.map(campground => ({
+      type: "Feature",
+      geometry: campground.geometry,
+      properties: { popUpMarkup: campground?.properties?.popUpMarkup }
+    }))
+  }) %>'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <h1>All Campgrounds</h1>
+
+    <% for(let campground of campgrounds) {%>
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col md-4">
+                    <img class="img-fluid" src="<%= campground.images[0].url %>">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= campground.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= campground.description %>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <%= campground.location %>
+                            </small>
+                        </p>
+                        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">
+                            View <%= campground.title %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+            <script src="/javascripts/clusterMap.js"></script>
