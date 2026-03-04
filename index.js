@@ -26,6 +26,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const helmet = require('helmet');
 const dbUrl = process.env.DB_URL;
+const port = process.env.PORT || 3000;
 
 mongoose.connect(dbUrl)
     .then(() => {
