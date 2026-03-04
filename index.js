@@ -229,6 +229,10 @@ app.use(function (err, req, res, next) {
     res.status(status).render('error', { err })
 })
 
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
+
 // app.listen(3000, () => {
 //     console.log("App is listening on port 3000")
 // })
